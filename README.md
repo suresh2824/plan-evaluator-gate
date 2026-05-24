@@ -37,7 +37,9 @@ Then restart your Claude Code session. The skill is auto-discovered.
 
 ### Optional: strict-mode hook
 
-For enforcement at the `git mv` boundary (independent of Claude's discipline), add to your **project's** `.claude/settings.json`:
+For enforcement at the `git mv` boundary (independent of Claude's discipline), add a PreToolUse entry to your `.claude/settings.json`. The hook path depends on your install scope:
+
+**User-scope install** (the default — what `claude plugin install` produces):
 
 ```json
 {
@@ -48,7 +50,7 @@ For enforcement at the `git mv` boundary (independent of Claude's discipline), a
         "hooks": [
           {
             "type": "command",
-            "command": "bash $CLAUDE_PROJECT_DIR/.claude/plugins/cache/plan-evaluator-gate/plan-evaluator-gate/0.1.0/hooks/pretooluse-block-partial-move.sh",
+            "command": "bash $HOME/.claude/plugins/cache/plan-evaluator-gate/plan-evaluator-gate/0.1.0/hooks/pretooluse-block-partial-move.sh",
             "timeout": 5
           }
         ]
@@ -57,6 +59,10 @@ For enforcement at the `git mv` boundary (independent of Claude's discipline), a
   }
 }
 ```
+
+**Project-scope install:** swap `$HOME` for `$CLAUDE_PROJECT_DIR`.
+
+> **Version pin:** the `0.1.0` segment in the path is the plugin version. After a plugin upgrade, run `claude plugin details plan-evaluator-gate@plan-evaluator-gate` to find the new version segment and update the hook path. (Future improvement: declare the hook in `marketplace.json` so Claude Code auto-wires it without a manual settings.json edit.)
 
 The hook fires only on `git mv .../partial/<plan>.md .../completed/...` patterns; non-matching commands pass through.
 

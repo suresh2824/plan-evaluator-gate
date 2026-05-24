@@ -71,7 +71,7 @@ A plan that **BLOCKS**:
 
 ## Strict-mode hook (optional)
 
-For teams that want enforcement at the `git mv` boundary (not just Claude's discipline), this plugin ships an opt-in PreToolUse hook. Add to your project's `.claude/settings.json`:
+For teams that want enforcement at the `git mv` boundary (not just Claude's discipline), this plugin ships an opt-in PreToolUse hook. Add to your `.claude/settings.json` (user-scope install path — the default):
 
 ```json
 {
@@ -82,7 +82,7 @@ For teams that want enforcement at the `git mv` boundary (not just Claude's disc
         "hooks": [
           {
             "type": "command",
-            "command": "bash $CLAUDE_PROJECT_DIR/.claude/plugins/cache/<marketplace-id>/plan-evaluator-gate/<version>/hooks/pretooluse-block-partial-move.sh",
+            "command": "bash $HOME/.claude/plugins/cache/plan-evaluator-gate/plan-evaluator-gate/0.1.0/hooks/pretooluse-block-partial-move.sh",
             "timeout": 5
           }
         ]
@@ -91,6 +91,8 @@ For teams that want enforcement at the `git mv` boundary (not just Claude's disc
   }
 }
 ```
+
+For project-scope installs, swap `$HOME` for `$CLAUDE_PROJECT_DIR`. After a plugin upgrade, run `claude plugin details plan-evaluator-gate@plan-evaluator-gate` to find the new version segment and update the hook path.
 
 The hook fires on any `git mv .../partial/<plan>.md .../completed/...` command, reads the source plan, runs the same verification logic, and exits 2 (block) if the gate fails. Bypass via env `PLAN_EVALUATOR_GATE_BYPASS=1` for intentional exceptions.
 
