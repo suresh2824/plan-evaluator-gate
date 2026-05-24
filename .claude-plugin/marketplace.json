@@ -1,0 +1,21 @@
+{
+  "name": "plan-evaluator-gate",
+  "description": "Companion plugin for superpowers:writing-plans — enforces ## Evaluator section before partial → completed plan-lifecycle transition.",
+  "owner": {
+    "name": "Suresh",
+    "email": "suresh@ministerwhite.com"
+  },
+  "plugins": [
+    {
+      "name": "plan-evaluator-gate",
+      "description": "Block partial → completed plan moves until the plan declares a runnable ## Evaluator section. Companion to obra/superpowers writing-plans.",
+      "version": "0.1.0",
+      "source": "./",
+      "author": {
+        "name": "Suresh",
+        "email": "suresh@ministerwhite.com"
+      },
+      "homepage": "https://github.com/suresh2824/plan-evaluator-gate"
+    }
+  ]
+}
